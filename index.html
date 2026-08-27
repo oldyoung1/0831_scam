@@ -253,7 +253,7 @@
         <div class="right-panel">
             <div class="panel-title" id="panel-title">請選擇學員的回應：</div>
             <div class="controls" id="controls">
-                <button class="btn" onclick="next(1, 'A')">A. 什麼？！但我還想去復健，我現在去轉帳，拜託不要鎖卡！</button>
+                <button class="btn" onclick="next(1, 'A')">A. 什麼？！但我還想去復健，我現在就去轉帳！</button>
                 <button class="btn" onclick="next(1, 'B')">B. 這太奇怪了，我明天再去找專管員歐陽老師確認。</button>
                 <button class="btn" onclick="next(1, 'C')">C. 重複申報？不可能，我要直接掛電話去問機構。</button>
             </div>
@@ -301,7 +301,7 @@
             const controls = document.getElementById('controls');
             
             if (stage === 1) {
-                if (choice === 'A') appendUserMessage("什麼？！但我還想去復健，我現在去轉帳，拜託不要鎖卡！");
+                if (choice === 'A') appendUserMessage("什麼？！但我還想去復健，我現在就去轉帳！");
                 if (choice === 'B') appendUserMessage("這太奇怪了，我明天再去找專管員歐陽老師確認。");
                 if (choice === 'C') appendUserMessage("重複申報？不可能，我要去問機構。");
 
