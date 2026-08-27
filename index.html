@@ -306,7 +306,7 @@
                 if (choice === 'C') appendUserMessage("重複申報？不可能，我要去問機構。");
 
                 // 詐騙集團回應並進入第二關
-                appendScammerMessage("我們系統有作業時間限制，為了證明這是正常流程，如果你有疑慮，我也可以幫你轉給『警察局承辦林員警』跟你說明！但你現在必須先提供『身分證字號』做登記！");
+                appendScammerMessage("我們系統有作業時間限制，如果你有疑慮，我也可以幫你轉給『警察局承辦林員警』跟你說明！但你現在必須先提供『身分證字號』做登記！");
                 
                 controls.innerHTML = `
                     <button class="btn" onclick="next(2, 'A')">A. 好...我的身分證字號是 A123...請幫我轉給警察說明。</button>
@@ -324,7 +324,7 @@
                 if (choice === 'C') appendUserMessage("政府機關不會電話轉接警察！我現在就要掛電話！");
 
                 // 詐騙集團回應並進入第三關
-                appendScammerMessage("其實你們專管歐陽老師，剛剛有寄電子郵件跟簡訊讓我跟你確認，我現在轉發給你，你看完就知道是真的！你可以給我你的 Email 信箱給我，然後再把錢轉入指定監管帳戶！");
+                appendScammerMessage("其實你們專管歐陽老師，剛剛有寄電子郵件跟簡訊讓我跟你確認，我現在轉發給你，你看完就知道沒問題！你把你的 Email 信箱給我，然後再把錢轉入指定監管帳戶！");
                 
                 controls.innerHTML = `
                     <button class="btn" onclick="next(3, 'A')">A. 如果是歐陽老師那我就放心了，那我現在就轉帳。</button>
