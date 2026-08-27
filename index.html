@@ -253,7 +253,7 @@
         <div class="right-panel">
             <div class="panel-title" id="panel-title">請選擇學員的回應：</div>
             <div class="controls" id="controls">
-                <button class="btn" onclick="next(1, 'A')">A. 什麼？！但我還想去復健，我現在就去轉帳！</button>
+                <button class="btn" onclick="next(1, 'A')">A. 什麼？！但我還想去復健，可以不要鎖我卡嗎？</button>
                 <button class="btn" onclick="next(1, 'B')">B. 這太奇怪了，我明天再去找專管員歐陽老師確認。</button>
                 <button class="btn" onclick="next(1, 'C')">C. 重複申報？不可能，我要直接掛電話去問機構。</button>
             </div>
@@ -306,7 +306,7 @@
                 if (choice === 'C') appendUserMessage("重複申報？不可能，我要去問機構。");
 
                 // 詐騙集團回應並進入第二關
-                appendScammerMessage("現在系統作業時間倒數，不能等你明天確認！為了證明這是正常流程、不是詐騙，我現在幫你轉給『警察局承辦林員警』跟您說明！但你現在必須先提供『身分證字號』做登記！");
+                appendScammerMessage("我們系統有作業時間限制，為了證明這是正常流程，如果你有疑慮，我也可以幫你轉給『警察局承辦林員警』跟你說明！但你現在必須先提供『身分證字號』做登記！");
                 
                 controls.innerHTML = `
                     <button class="btn" onclick="next(2, 'A')">A. 好...我的身分證字號是 A123...請幫我轉給警察說明。</button>
