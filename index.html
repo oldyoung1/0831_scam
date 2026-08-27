@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>健保局連環陷阱 - 防詐連環考驗</title>
+    <style>
+        body { font-family: sans-serif; background-color: #efeae2; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        .chat-container { width: 100%; max-width: 420px; background-color: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); height: 650px; display: flex; flex-direction: column; overflow: hidden; }
+        .header { background-color: #075e54; color: white; padding: 15px; font-weight: bold; text-align: center; }
+        .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .message { max-width: 82%; padding: 10px 14px; border-radius: 10px; font-size: 0.95em; line-height: 1.4; word-wrap: break-word; }
+        .scammer { background-color: #f1f0f0; align-self: flex-start; border-top-left-radius: 0; }
+        .user { background-color: #dcf8c6; align-self: flex-end; border-top-right-radius: 0; }
+        .controls { background-color: white; padding: 15px; border-top: 1px solid #e0e0e0; }
+        .btn { display: block; width: 100%; padding: 10px 12px; margin-bottom: 8px; border: 1px solid #007bff; border-radius: 8px; background-color: white; color: #007bff; font-weight: bold; cursor: pointer; text-align: left; font-size: 0.9em; }
+        .btn:hover { background-color: #007bff; color: white; }
+        .result-safe { color: green; font-weight: bold; text-align: center; line-height: 1.6; }
+        .result-scam { color: red; font-weight: bold; text-align: center; line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="header">🛡️ 健保局連環攻防演練</div>
+        <div class="chat-body" id="chat">
+            <div class="message scammer">阿宏您好！我是健保局稽查組。系統顯示你在復健中心出現『重複過卡異常』！你不立刻處理，10分鐘內健保局就會鎖卡，讓你之後不能刷卡做復健！</div>
+        </div>
+        <div class="controls" id="controls">
+            <button class="btn" onclick="next(1, 'A')">A. 什麼？！但我是正常去復健，拜託不要鎖卡！</button>
+            <button class="btn" onclick="next(1, 'B')">B. 這太奇怪了，我明天再去找專管員歐陽老師確認。</button>
+            <button class="btn" onclick="next(1, 'C')">C. 重複申報？不可能，我要直接掛電話去問機構。</button>
+        </div>
+    </div>
+
+    <script>
+        function appendUserMessage(text) {
+            const chat = document.getElementById('chat');
+            chat.innerHTML += `<div class="message user">${text}</div>`;
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function appendScammerMessage(text) {
+            const chat = document.getElementById('chat');
+            chat.innerHTML += `<div class="message scammer">${text}</div>`;
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function end(isSafe, reason) {
+            const controls = document.getElementById('controls');
+            if (isSafe) {
+                controls.innerHTML = `<h3 class="result-safe">🎉 恭喜你完成所有考驗，成功躲避詐騙！<br><br>你頂住了詐騙集團威脅鎖卡、轉接警察、偽造老師 Email 的層層陷阱，成功守護自己的財產與個資！</h3>`;
+            } else {
+                controls.innerHTML = `<h3 class="result-scam">❌ 慘遭詐騙成功！<br><br>${reason}<br><br>記住：政府絕不會電話轉接警察、絕不會叫你轉帳監管帳戶！</h3>`;
+            }
+        }
+
+        function next(stage, choice) {
+            const controls = document.getElementById('controls');
+            
+            if (stage === 1) {
+                if (choice === 'A') appendUserMessage("什麼？！但我是正常去復健，拜託不要鎖卡！");
+                if (choice === 'B') appendUserMessage("這太奇怪了，我明天再去找專管員歐陽老師確認。");
+                if (choice === 'C') appendUserMessage("重複申報？不可能，我要直接掛電話去問機構。");
+
+                // 詐騙集團強行繼續說服！
+                appendScammerMessage("現在系統作業時間倒數，不能等你明天確認！為了證明這是正常流程、不是詐騙，我現在幫你轉給『警察局承辦員警』跟您說明！但你現在必須先提供『身分證字號』做登記！");
+                
+                controls.innerHTML = `
+                    <button class="btn" onclick="next(2, 'A')">A. 好...我的身分證字號是 A123...請幫我轉給警察說明。</button>
+                    <button class="btn" onclick="next(2, 'B')">B. 警察局我自己打 110 問，我不要在電話裡報身分證。</button>
+                    <button class="btn" onclick="next(2, 'C')">C. 政府機關不會電話轉接警察！我現在就要掛電話！</button>
+                `;
+            } else if (stage === 2) {
+                if (choice === 'A') {
+                    appendUserMessage("好...我的身分證字號是 A123...請幫我轉給警察說明。");
+                    end(false, "你在電話中洩漏了身分證字號，並相信了詐騙集團偽造的轉接警察話術！");
+                    return;
+                }
+                
+                if (choice === 'B') appendUserMessage("警察局我自己打 110 問，我不要在電話裡報身分證。");
+                if (choice === 'C') appendUserMessage("政府機關不會電話轉接警察！我現在就要掛電話！");
+
+                // 詐騙集團丟出第三張牌：歐陽老師的 Mail
+                appendScammerMessage("你還是不相信我？好！你們復健中心專管歐陽老師，剛剛已經寄了一封『驗證 MAIL』給我做證。我現在轉發給你，你看完就知道是真的！快把你的 Email 信箱給我，確認後請將錢轉入指定監管帳戶！");
+                
+                controls.innerHTML = `
+                    <button class="btn" onclick="next(3, 'A')">A. 連歐陽老師都寄 MAIL 作證？！我的信箱是 myemail@...我收到看完就轉帳。</button>
+                    <button class="btn" onclick="next(3, 'B')">B. 那我把錢轉到監管帳戶就能證明清白了嗎？那我現在去 ATM...</button>
+                    <button class="btn" onclick="next(3, 'C')">C. 我沒有 Email！而且老師不可能寄這種信！這就是詐騙，我要直接掛斷！</button>
+                `;
+            } else if (stage === 3) {
+                if (choice === 'A') {
+                    appendUserMessage("連歐陽老師都寄 MAIL 作證？！我的信箱是 myemail@...我收到看完就轉帳。");
+                    end(false, "你相信了對方偽造的歐陽老師 Email，並照指示匯款到詐騙帳戶！");
+                } else if (choice === 'B') {
+                    appendUserMessage("那我把錢轉到監管帳戶就能證明清白了嗎？那我現在去 ATM...");
+                    end(false, "你將積蓄匯給了詐騙集團的「監管帳戶」，財產遭受重大損失！");
+                } else if (choice === 'C') {
+                    appendUserMessage("我沒有 Email！而且老師不可能寄這種信！這就是詐騙，我要直接掛斷！");
+                    end(true, ""); // 完全通關！
+                }
+            }
+        }
+    </script>
+</body>
+</html>
